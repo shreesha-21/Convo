@@ -42,19 +42,19 @@ fun ChatListScreen() {
     ) {
         // --- Top Header Section (Purple Area) ---
         Column(
-            modifier = Modifier.Companion.padding(horizontal = 24.dp, vertical = 16.dp)
+            modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
         ) {
             // Header Row
             Row(
-                modifier = Modifier.Companion.fillMaxWidth(),
+                modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.Companion.CenterVertically
+                verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
                     text = stringResource(R.string.app_name),
                     style = MaterialTheme.typography.titleLarge,
-                    color = Color.Companion.White,
-                    fontWeight = FontWeight.Companion.Bold
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold
                 )
                 Icon(
                     imageVector = Icons.Default.Edit,
@@ -63,7 +63,7 @@ fun ChatListScreen() {
                 )
             }
 
-            Spacer(modifier = Modifier.Companion.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
 
             // Stories / Status Row
             LazyRow(
@@ -75,21 +75,21 @@ fun ChatListScreen() {
                 }
             }
 
-            Spacer(modifier = Modifier.Companion.height(24.dp))
+            Spacer(modifier = Modifier.height(24.dp))
         }
 
         // --- Main Content Section (White Sheet) ---
         Surface(
-            modifier = Modifier.Companion.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp), // The Curved Top
-            color = Color.Companion.White
+            color = MaterialTheme.colorScheme.onPrimary
         ) {
-            Column(modifier = Modifier.Companion.padding(24.dp)) {
+            Column(modifier = Modifier.padding(24.dp)) {
 
                 // Search Bar
                 SearchBarPlaceholder(onSearch = {})
 
-                Spacer(modifier = Modifier.Companion.height(16.dp))
+                Spacer(modifier = Modifier.height(16.dp))
 
                 // The Chat List
                 LazyColumn(

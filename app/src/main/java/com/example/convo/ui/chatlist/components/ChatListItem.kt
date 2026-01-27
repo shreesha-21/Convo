@@ -39,7 +39,12 @@ fun ChatListItem(name: String, message: String, time: String, unreadCount: Int) 
             color = Color.LightGray
         ) {
             // Place your Image composable here
-            Icon(Icons.Default.Person, contentDescription = null, tint = Color.White, modifier = Modifier.padding(8.dp))
+            Icon(
+                Icons.Default.Person,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier.padding(8.dp)
+            )
         }
 
         Spacer(modifier = Modifier.width(16.dp))
@@ -72,7 +77,7 @@ fun ChatListItem(name: String, message: String, time: String, unreadCount: Int) 
                 Spacer(modifier = Modifier.height(6.dp))
                 Surface(
                     shape = CircleShape,
-                    color = MaterialTheme.colorScheme.onTertiaryContainer,
+                    color = MaterialTheme.colorScheme.onPrimaryContainer,
                     modifier = Modifier.size(22.dp)
                 ) {
                     Box(contentAlignment = Alignment.Center) {

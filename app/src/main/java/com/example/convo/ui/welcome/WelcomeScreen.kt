@@ -60,7 +60,7 @@ fun WelcomeScreen(onGetStartedClick: () -> Unit) {
         Surface(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
-            color = Color.White
+            color = MaterialTheme.colorScheme.primaryContainer
         ) {
             Column(
                 modifier = Modifier
