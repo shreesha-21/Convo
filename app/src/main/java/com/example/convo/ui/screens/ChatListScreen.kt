@@ -22,17 +22,23 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.convo.R
+import com.example.convo.ui.components.AddStoryItem
 import com.example.convo.ui.components.ChatListItem
+import com.example.convo.ui.components.SearchBarPlaceholder
 import com.example.convo.ui.components.StoryItem
+import com.example.convo.ui.theme.AppTheme
 
 @Composable
 fun ChatListScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .background(MaterialTheme.colorScheme.secondary) // Background for the top half
+            .background(MaterialTheme.colorScheme.primary) // Background for the top half
     ) {
         // --- Top Header Section (Purple Area) ---
         Column(
@@ -45,8 +51,8 @@ fun ChatListScreen() {
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "Chats",
-                    style = MaterialTheme.typography.headlineMedium,
+                    text = stringResource(R.string.app_name),
+                    style = MaterialTheme.typography.titleLarge,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
@@ -63,7 +69,7 @@ fun ChatListScreen() {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                item { AddStoryItem() } // The "+" Button
+                item { AddStoryItem() }
                 items(5) { // 5 Mock users
                     StoryItem(name = "User $it")
                 }
@@ -81,7 +87,7 @@ fun ChatListScreen() {
             Column(modifier = Modifier.padding(24.dp)) {
 
                 // Search Bar
-                SearchBarPlaceholder()
+                SearchBarPlaceholder(onSearch = {})
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -103,3 +109,10 @@ fun ChatListScreen() {
     }
 }
 
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun PreviewChatListScreen() {
+    AppTheme() {
+        ChatListScreen()
+    }
+}

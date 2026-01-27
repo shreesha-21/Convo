@@ -32,7 +32,7 @@ val Typography = Typography(
     titleLarge = TextStyle(
         fontFamily = TitleFontFamily,
         fontWeight = FontWeight.Bold,
-        fontSize = 22.sp,
+        fontSize = 28.sp,
         lineHeight = 28.sp,
         letterSpacing = 0.5.sp
     ),

@@ -30,7 +30,7 @@ fun SearchBarPlaceholder(
 ) {
     Surface(
         shape = RoundedCornerShape(24.dp), // Pill shape
-        color = MaterialTheme.colorScheme.tertiary, // Light gray background
+        color = MaterialTheme.colorScheme.secondary, // Light gray background
         modifier = Modifier.fillMaxWidth().height(50.dp)
     ) {
         Row(
