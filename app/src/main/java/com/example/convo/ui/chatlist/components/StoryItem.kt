@@ -1,5 +1,6 @@
-package com.example.convo.ui.components
+package com.example.convo.ui.chatlist.`c`
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
@@ -29,7 +30,7 @@ fun StoryItem(name: String) {
                 .size(60.dp)
                 .padding(2.dp), // Gap for border
             shape = CircleShape,
-            border = androidx.compose.foundation.BorderStroke(2.dp, Color.White), // White ring
+            border = BorderStroke(2.dp, Color.White), // White ring
             color = Color.LightGray
         ) {
             Icon(Icons.Default.Person, contentDescription = null, tint = Color.White)

@@ -1,4 +1,4 @@
-package com.example.convo.ui.screens
+package com.example.convo.ui.chatlist
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -27,43 +27,43 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.convo.R
-import com.example.convo.ui.components.AddStoryItem
-import com.example.convo.ui.components.ChatListItem
-import com.example.convo.ui.components.SearchBarPlaceholder
-import com.example.convo.ui.components.StoryItem
+import com.example.convo.ui.chatlist.c.AddStoryItem
+import com.example.convo.ui.chatlist.c.ChatListItem
+import com.example.convo.ui.chatlist.c.SearchBarPlaceholder
+import com.example.convo.ui.chatlist.c.StoryItem
 import com.example.convo.ui.theme.AppTheme
 
 @Composable
 fun ChatListScreen() {
     Column(
-        modifier = Modifier
+        modifier = Modifier.Companion
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary) // Background for the top half
     ) {
         // --- Top Header Section (Purple Area) ---
         Column(
-            modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+            modifier = Modifier.Companion.padding(horizontal = 24.dp, vertical = 16.dp)
         ) {
             // Header Row
             Row(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier.Companion.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Companion.CenterVertically
             ) {
                 Text(
                     text = stringResource(R.string.app_name),
                     style = MaterialTheme.typography.titleLarge,
-                    color = Color.White,
-                    fontWeight = FontWeight.Bold
+                    color = Color.Companion.White,
+                    fontWeight = FontWeight.Companion.Bold
                 )
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = "Edit",
-                    tint = Color.White
+                    tint = Color.Companion.White
                 )
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.Companion.height(24.dp))
 
             // Stories / Status Row
             LazyRow(
@@ -75,21 +75,21 @@ fun ChatListScreen() {
                 }
             }
 
-            Spacer(modifier = Modifier.height(24.dp))
+            Spacer(modifier = Modifier.Companion.height(24.dp))
         }
 
         // --- Main Content Section (White Sheet) ---
         Surface(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier.Companion.fillMaxSize(),
             shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp), // The Curved Top
-            color = Color.White
+            color = Color.Companion.White
         ) {
-            Column(modifier = Modifier.padding(24.dp)) {
+            Column(modifier = Modifier.Companion.padding(24.dp)) {
 
                 // Search Bar
                 SearchBarPlaceholder(onSearch = {})
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Spacer(modifier = Modifier.Companion.height(16.dp))
 
                 // The Chat List
                 LazyColumn(

@@ -1,4 +1,4 @@
-package com.example.convo.ui.components
+package com.example.convo.ui.chatlist.`c`
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
