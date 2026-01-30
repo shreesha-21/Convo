@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Convo</string>
+
+    <!-- login screen strings -->
+    <string name="login_screen_text">Login to continue</string>
+    <string name="enter_details_prompt">Please enter your details.</string>
+    <string name="username">Username</string>
+    <string name="login_button_text">Log In</string>
+
 </resources>
