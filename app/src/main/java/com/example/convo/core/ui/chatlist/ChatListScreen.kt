@@ -1,4 +1,4 @@
-package com.example.convo.ui.chatlist
+package com.example.convo.core.ui.chatlist
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

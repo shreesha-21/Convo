@@ -1,4 +1,4 @@
-package com.example.convo.ui.login
+package com.example.convo.core.ui.login
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

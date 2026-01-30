@@ -1,4 +1,4 @@
-package com.example.convo.ui.chatdetails
+package com.example.convo.core.ui.chatdetails
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background

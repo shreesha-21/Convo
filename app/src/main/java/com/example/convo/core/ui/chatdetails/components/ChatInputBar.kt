@@ -1,4 +1,4 @@
-package com.example.convo.ui.chatdetails.components
+package com.example.convo.core.ui.chatdetails.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
