@@ -27,14 +27,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.convo.R
+import com.example.convo.core.ui.theme.AppTheme
 import com.example.convo.ui.chatlist.c.AddStoryItem
 import com.example.convo.ui.chatlist.c.ChatListItem
 import com.example.convo.ui.chatlist.c.SearchBarPlaceholder
 import com.example.convo.ui.chatlist.c.StoryItem
-import com.example.convo.ui.theme.AppTheme
 
 @Composable
-fun ChatListScreen() {
+fun ChatListScreen(
+    onChatClick: (String) -> Unit
+) {
     Column(
         modifier = Modifier.Companion
             .fillMaxSize()
@@ -113,6 +115,6 @@ fun ChatListScreen() {
 @Composable
 fun PreviewChatListScreen() {
     AppTheme() {
-        ChatListScreen()
+        ChatListScreen(onChatClick = {})
     }
 }

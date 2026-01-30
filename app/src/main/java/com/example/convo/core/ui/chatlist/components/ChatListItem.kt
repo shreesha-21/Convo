@@ -23,7 +23,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.convo.ui.theme.AppTheme
+import com.example.convo.core.ui.theme.AppTheme
 
 // --- Component: Chat List Item ---
 @Composable
