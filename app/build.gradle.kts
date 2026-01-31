@@ -60,4 +60,7 @@ dependencies {
 
     //  nav host dependency
     implementation(libs.androidx.navigation.compose)
+
+    //  view model dependency
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
 }

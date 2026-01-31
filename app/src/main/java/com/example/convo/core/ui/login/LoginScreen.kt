@@ -1,5 +1,6 @@
 package com.example.convo.core.ui.login
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -11,22 +12,43 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.convo.R
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun LoginScreen(
-    onLoginClick: (String) -> Unit // Callback to send the name back
+    onLoginClick: (String) -> Unit, // Callback to send the name back
+    viewModel: LoginViewModel = viewModel()
 ) {
     // username stores the username
-    var username by remember { mutableStateOf("") }
+    val username by viewModel.username.collectAsStateWithLifecycle()
+    var showSnackbar: Boolean = false
+
+    LaunchedEffect(Unit) {
+        viewModel.uiEvent.collect { event ->
+            when(event) {
+                is LoginViewModel.UiEvent.NavigateToChatList -> {
+                    // Trigger the actual navigation callback
+                    onLoginClick(event.username)
+                }
+                is LoginViewModel.UiEvent.ShowSnackbar -> {
+                    Log.d("LOGIN_SCREEN", "Failed to navigate to the chatList screen")
+                    showSnackbar = true;
+                }
+            }
+        }
+    }
 
     Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary) // Top half Purple
@@ -36,13 +58,18 @@ fun LoginScreen(
             modifier = Modifier
                 .weight(1f) // Takes up top space
                 .fillMaxWidth(),
-            contentAlignment = Alignment.CenterStart
+            contentAlignment = Alignment.Center
         ) {
             Column(
                 modifier = Modifier.padding(start = 32.dp),
-                horizontalAlignment = Alignment.Start
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Image(painter = painterResource(R.drawable.applogo), contentDescription = null)
+                Image(
+                    painter = painterResource(R.drawable.applogo),
+                    contentDescription = null,
+                    contentScale = ContentScale.Crop,
+                    alignment = Alignment.CenterStart
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = stringResource(R.string.login_screen_text),
@@ -56,6 +83,12 @@ fun LoginScreen(
                     style = MaterialTheme.typography.bodyLarge,
                     color = Color.White.copy(alpha = 0.8f)
                 )
+                if (showSnackbar) {
+                    Spacer(modifier = Modifier.height(24.dp))
+                    Snackbar(modifier = Modifier.fillMaxWidth()) {
+                        Text(stringResource(R.string.snackbar_text))
+                    }
+                }
             }
         }
 
@@ -76,7 +109,7 @@ fun LoginScreen(
                 // Input Field
                 OutlinedTextField(
                     value = username,
-                    onValueChange = { username = it },
+                    onValueChange = { viewModel.onUsernameChange(it) },
                     label = { Text(stringResource(R.string.username)) },
                     leadingIcon = { Icon(Icons.Default.Person, contentDescription = null) },
                     modifier = Modifier.fillMaxWidth(),
@@ -95,7 +128,7 @@ fun LoginScreen(
                 Button(
                     onClick = {
                         if (username.isNotBlank()) {
-                            onLoginClick(username)
+                            viewModel.login()
                         }
                     },
                     modifier = Modifier

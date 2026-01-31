@@ -6,5 +6,6 @@
     <string name="enter_details_prompt">Please enter your details.</string>
     <string name="username">Username</string>
     <string name="login_button_text">Log In</string>
+    <string name="snackbar_text">Failed to login</string>
 
 </resources>
