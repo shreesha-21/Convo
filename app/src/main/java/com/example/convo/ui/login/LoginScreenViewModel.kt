@@ -1,4 +1,4 @@
-package com.example.convo.core.ui.login
+package com.example.convo.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

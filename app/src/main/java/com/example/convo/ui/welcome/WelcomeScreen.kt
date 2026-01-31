@@ -1,4 +1,4 @@
-package com.example.convo.core.ui.welcome
+package com.example.convo.ui.welcome
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

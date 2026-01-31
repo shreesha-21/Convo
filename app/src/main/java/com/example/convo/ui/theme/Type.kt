@@ -1,4 +1,4 @@
-package com.example.convo.core.ui.theme
+package com.example.convo.ui.theme
 
 import androidx.compose.material3.Text
 import androidx.compose.material3.Typography

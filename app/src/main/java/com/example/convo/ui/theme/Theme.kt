@@ -1,4 +1,4 @@
-package com.example.convo.core.ui.theme
+package com.example.convo.ui.theme
 
 import android.app.Activity
 import android.os.Build
