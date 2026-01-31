@@ -1,5 +1,10 @@
 <resources>
     <string name="app_name">Convo</string>
+    
+    <!-- Welcome screen strings -->
+    <string name="connect_text">Connect with friends\n easily &amp; quickly</string>
+    <string name="about_us">Our chat app is the perfect way to stay connected with friends and family.</string>
+    <string name="get_started">Get Started</string>
 
     <!-- login screen strings -->
     <string name="login_screen_text">Login to continue</string>

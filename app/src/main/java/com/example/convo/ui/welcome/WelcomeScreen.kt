@@ -74,7 +74,7 @@ fun WelcomeScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Connect with friends\neasily & quickly",
+                    text = stringResource(R.string.connect_text),
                     style = MaterialTheme.typography.headlineSmall,
                     color = Color.Black,
                     fontWeight = FontWeight.Bold,
@@ -84,7 +84,7 @@ fun WelcomeScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "Our chat app is the perfect way to stay connected with friends and family.",
+                    text = stringResource(R.string.about_us),
                     style = MaterialTheme.typography.bodyMedium,
                     color = Color.Gray,
                     textAlign = TextAlign.Center,
@@ -105,7 +105,7 @@ fun WelcomeScreen(
                     shape = RoundedCornerShape(16.dp) // Soft rounded corners
                 ) {
                     Text(
-                        text = "Get Started",
+                        text = stringResource(R.string.get_started),
                         fontSize = 18.sp,
                         fontWeight = FontWeight.Bold
                     )
