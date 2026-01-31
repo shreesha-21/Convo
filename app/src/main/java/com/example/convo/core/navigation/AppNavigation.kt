@@ -6,42 +6,43 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.convo.core.ui.chatdetails.ChatDetailScreen
-import com.example.convo.core.ui.chatlist.ChatListScreen
-import com.example.convo.core.ui.login.LoginScreen
-import com.example.convo.core.ui.welcome.WelcomeScreen
+import com.example.convo.ui.chatdetails.ChatDetailScreen
+import com.example.convo.ui.chatlist.ChatListScreen
+import com.example.convo.ui.login.LoginScreen
+import com.example.convo.ui.welcome.WelcomeScreen
 
+//  This composable handles the navigation between the components
 @Composable
 fun AppNavigation() {
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = "welcome") {
+    NavHost(navController = navController, startDestination = Routes.WELCOME) {
 
-        // 1. Welcome Screen
-        composable("welcome") {
+        // Welcome Screen
+        composable(Routes.WELCOME) {
             WelcomeScreen(
                 onGetStartedClick = {
-                    navController.navigate("login")
+                    navController.navigate(Routes.LOGIN)
                 }
             )
         }
 
-        // 2. Login Screen
-        composable("login") {
+        // Login Screen
+        composable(Routes.LOGIN) {
             LoginScreen(
                 onLoginClick = { username ->
                     // Navigate to Chat List and pass the username
                     // popUpTo("welcome") removes the previous screens from history so user can't go back to login
-                    navController.navigate("chat_list/$username") {
-                        popUpTo("welcome") { inclusive = true }
+                    navController.navigate(Routes.chatList(username)) {
+                        popUpTo(Routes.WELCOME) { inclusive = true }
                     }
                 }
             )
         }
 
-        // 3. Chat List Screen (Reads the username passed from Login)
+        // Chat List Screen
         composable(
-            route = "chat_list/{username}",
+            route = Routes.CHATLIST,
             arguments = listOf(navArgument("username") { type = NavType.StringType })
         ) { backStackEntry ->
             val username = backStackEntry.arguments?.getString("username") ?: "User"
@@ -49,20 +50,19 @@ fun AppNavigation() {
             ChatListScreen(
                 // You'll need to update your ChatListScreen to accept this click
                 onChatClick = { chatName ->
-                    navController.navigate("chat_detail/$chatName")
+                    navController.navigate(Routes.chatDetail(chatName))
                 }
             )
         }
 
-        // 4. Chat Detail Screen (Reads the specific chat name)
+        // Chat Detail Screen
         composable(
-            route = "chat_detail/{chatName}",
+            route = Routes.CHATDETAIL,
             arguments = listOf(navArgument("chatName") { type = NavType.StringType })
         ) { backStackEntry ->
             val chatName = backStackEntry.arguments?.getString("chatName") ?: "Chat"
 
-            ChatDetailScreen(
-                // You'll need to update ChatDetailScreen to accept the name if you want to show "Prateek" instead of "Shashi"
+                ChatDetailScreen(
                 onBackClick = {
                     navController.popBackStack()
                 }
