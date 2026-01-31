@@ -26,7 +26,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun LoginScreen(
     onLoginClick: (String) -> Unit, // Callback to send the name back
-    viewModel: LoginViewModel = viewModel()
+    viewModel: LoginViewModel = viewModel(),
+    modifier: Modifier = Modifier
 ) {
     // username stores the username
     val username by viewModel.username.collectAsStateWithLifecycle()
@@ -49,7 +50,7 @@ fun LoginScreen(
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary) // Top half Purple
     ) {

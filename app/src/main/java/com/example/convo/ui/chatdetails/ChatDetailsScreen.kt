@@ -23,14 +23,15 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.convo.domain.model.Message
 import com.example.convo.domain.model.MessageType
-import com.example.convo.core.ui.chatdetails.components.ChatInputBar
-import com.example.convo.core.ui.chatdetails.components.ChatTopBar
-import com.example.convo.core.ui.chatdetails.components.MessageBubble
-import com.example.convo.core.ui.theme.AppTheme
+import com.example.convo.ui.chatdetails.components.ChatInputBar
+import com.example.convo.ui.chatdetails.components.ChatTopBar
+import com.example.convo.ui.chatdetails.components.MessageBubble
+import com.example.convo.ui.theme.AppTheme
 
 @Composable
 fun ChatDetailScreen(
-    onBackClick: () -> Unit
+    onBackClick: () -> Unit,
+    modifier: Modifier = Modifier
 ) {
     // Mock Messages
     val messages = remember {
@@ -43,7 +44,7 @@ fun ChatDetailScreen(
     }
 
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary) // Background for Top Bar area
     ) {

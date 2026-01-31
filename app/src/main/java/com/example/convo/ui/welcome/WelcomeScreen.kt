@@ -23,9 +23,12 @@ import com.example.convo.R
 
 //  The screen which users see when they first open the application
 @Composable
-fun WelcomeScreen(onGetStartedClick: () -> Unit) {
+fun WelcomeScreen(
+    onGetStartedClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary)
     ) {

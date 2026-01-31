@@ -1,6 +1,7 @@
 package com.example.convo.core.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -13,7 +14,7 @@ import com.example.convo.ui.welcome.WelcomeScreen
 
 //  This composable handles the navigation between the components
 @Composable
-fun AppNavigation() {
+fun AppNavigation(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = Routes.WELCOME) {
@@ -23,7 +24,8 @@ fun AppNavigation() {
             WelcomeScreen(
                 onGetStartedClick = {
                     navController.navigate(Routes.LOGIN)
-                }
+                },
+                modifier = modifier
             )
         }
 
@@ -36,7 +38,8 @@ fun AppNavigation() {
                     navController.navigate(Routes.chatList(username)) {
                         popUpTo(Routes.WELCOME) { inclusive = true }
                     }
-                }
+                },
+                modifier = modifier
             )
         }
 
@@ -51,7 +54,8 @@ fun AppNavigation() {
                 // You'll need to update your ChatListScreen to accept this click
                 onChatClick = { chatName ->
                     navController.navigate(Routes.chatDetail(chatName))
-                }
+                },
+                modifier = modifier
             )
         }
 
@@ -61,11 +65,11 @@ fun AppNavigation() {
             arguments = listOf(navArgument("chatName") { type = NavType.StringType })
         ) { backStackEntry ->
             val chatName = backStackEntry.arguments?.getString("chatName") ?: "Chat"
-
                 ChatDetailScreen(
                 onBackClick = {
                     navController.popBackStack()
-                }
+                },
+                modifier = modifier
             )
         }
     }
