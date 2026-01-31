@@ -23,11 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.convo.domain.model.ChatSummary
+import com.example.convo.domain.model.Message
 import com.example.convo.ui.theme.AppTheme
 
 // --- Component: Chat List Item ---
 @Composable
-fun ChatListItem(name: String, message: String, time: String, unreadCount: Int) {
+fun ChatListItem(chatSummary: ChatSummary) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
@@ -52,28 +54,30 @@ fun ChatListItem(name: String, message: String, time: String, unreadCount: Int) 
         // Name and Message
         Column(modifier = Modifier.weight(1f)) {
             Text(
-                text = name,
+                text = chatSummary.sender,
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             Spacer(modifier = Modifier.height(4.dp))
-            Text(
-                text = message,
-                style = MaterialTheme.typography.bodyMedium,
-                color = Color.Gray,
-                maxLines = 1
-            )
+            // TODO: Implement this last message sent text
+            //  Shows the last sent message
+//            Text(
+//                text = chatSummary,
+//                style = MaterialTheme.typography.bodyMedium,
+//                color = Color.Gray,
+//                maxLines = 1
+//            )
         }
 
         // Time and Badge
         Column(horizontalAlignment = Alignment.End) {
             Text(
-                text = time,
+                text = chatSummary.timeStamp,
                 style = MaterialTheme.typography.labelMedium,
-                color = if (unreadCount > 0) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
+                color = if (chatSummary.unreadCount > 0) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onPrimaryContainer
             )
 
-            if (unreadCount > 0) {
+            if (chatSummary.unreadCount > 0) {
                 Spacer(modifier = Modifier.height(6.dp))
                 Surface(
                     shape = CircleShape,
@@ -82,7 +86,7 @@ fun ChatListItem(name: String, message: String, time: String, unreadCount: Int) 
                 ) {
                     Box(contentAlignment = Alignment.Center) {
                         Text(
-                            text = unreadCount.toString(),
+                            text = chatSummary.unreadCount.toString(),
                             style = MaterialTheme.typography.labelSmall,
                             color = Color.White,
                             fontWeight = FontWeight.Bold
@@ -99,10 +103,11 @@ fun ChatListItem(name: String, message: String, time: String, unreadCount: Int) 
 fun PreviewChatListItem() {
     AppTheme() {
         ChatListItem(
-            message = "message",
-            time = "12:0",
-            name = "name",
-            unreadCount = 0
+            ChatSummary(
+                sender = "name",
+                timeStamp = "12:0",
+                unreadCount = 3
+            )
         )
     }
 }
