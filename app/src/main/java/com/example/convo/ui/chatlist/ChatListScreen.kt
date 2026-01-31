@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
@@ -19,6 +20,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,6 +28,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.convo.R
 import com.example.convo.ui.chatlist.c.AddStoryItem
 import com.example.convo.ui.chatlist.c.ChatListItem
@@ -36,8 +40,13 @@ import com.example.convo.ui.theme.AppTheme
 @Composable
 fun ChatListScreen(
     onChatClick: (String) -> Unit,
+    viewModel: ChatListViewModel = viewModel(),
     modifier: Modifier = Modifier
 ) {
+
+    val chats by viewModel.chats.collectAsStateWithLifecycle()
+    val stories by viewModel.stories.collectAsStateWithLifecycle()
+
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -73,8 +82,8 @@ fun ChatListScreen(
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
                 item { AddStoryItem() }
-                items(5) { // 5 Mock users
-                    StoryItem(name = "User $it")
+                items(stories) { user ->// 5 Mock users
+                    StoryItem(user)
                 }
             }
 
@@ -98,13 +107,8 @@ fun ChatListScreen(
                 LazyColumn(
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
-                    items(10) { index ->
-                        ChatListItem(
-                            name = "Prateek Saini $index",
-                            message = "Of course, what can I help you...",
-                            time = "2 min ago",
-                            unreadCount = if (index < 3) 3 else 0 // First 3 have badges
-                        )
+                    items(chats) { chat ->
+                        ChatListItem(chat)
                     }
                 }
             }
