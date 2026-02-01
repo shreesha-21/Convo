@@ -1,5 +1,6 @@
-package com.example.convo.ui.chatlist.`c`
+package com.example.convo.ui.chatlist
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,7 +31,7 @@ import com.example.convo.ui.theme.AppTheme
 @Composable
 fun ChatListItem(
     chatSummary: ChatSummary,
-    onClick: (String) -> Unit
+    onClick: () -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
@@ -54,7 +55,11 @@ fun ChatListItem(
         Spacer(modifier = Modifier.width(16.dp))
 
         // Name and Message
-        Column(modifier = Modifier.weight(1f)) {
+        Column(
+            modifier = Modifier
+                .weight(1f)
+                .clickable(enabled = true, onClick = onClick)
+        ) {
             Text(
                 text = chatSummary.sender,
                 style = MaterialTheme.typography.titleMedium,

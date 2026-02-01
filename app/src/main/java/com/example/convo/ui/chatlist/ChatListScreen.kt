@@ -35,7 +35,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.convo.R
 import com.example.convo.ui.chatlist.c.AddStoryItem
-import com.example.convo.ui.chatlist.c.ChatListItem
 import com.example.convo.ui.chatlist.c.SearchBarPlaceholder
 import com.example.convo.ui.chatlist.c.StoryItem
 import com.example.convo.ui.chatlist.components.ChatSelectionEvent
