@@ -2,12 +2,14 @@ package com.example.convo.core.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.convo.ui.chatdetails.ChatDetailScreen
+import com.example.convo.ui.chatdetails.ChatDetailViewModelFactory
 import com.example.convo.ui.chatlist.ChatListScreen
 import com.example.convo.ui.login.LoginScreen
 import com.example.convo.ui.welcome.WelcomeScreen
@@ -64,12 +66,12 @@ fun AppNavigation(modifier: Modifier = Modifier) {
             route = Routes.CHATDETAIL,
             arguments = listOf(navArgument("chatName") { type = NavType.StringType })
         ) { backStackEntry ->
-            val chatName = backStackEntry.arguments?.getString("chatName") ?: "Chat"
-                ChatDetailScreen(
-                onBackClick = {
-                    navController.popBackStack()
-                },
-                modifier = modifier
+            val chatName = backStackEntry.arguments?.getString("chatName") ?: error("username is required")
+
+            ChatDetailScreen(
+            onBackClick = { navController.popBackStack() },
+            modifier = modifier,
+            viewModel = viewModel(factory = ChatDetailViewModelFactory(username = chatName))
             )
         }
     }

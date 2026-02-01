@@ -15,14 +15,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.convo.domain.model.Message
-import com.example.convo.domain.model.MessageType
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.convo.ui.chatdetails.components.ChatInputBar
 import com.example.convo.ui.chatdetails.components.ChatTopBar
 import com.example.convo.ui.chatdetails.components.MessageBubble
@@ -31,17 +32,10 @@ import com.example.convo.ui.theme.AppTheme
 @Composable
 fun ChatDetailScreen(
     onBackClick: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    viewModel: ChatDetailViewModel = viewModel()
 ) {
-    // Mock Messages
-    val messages = remember {
-        listOf(
-            Message(sender = "me", content = "Hi Shashi, good morning!! \uD83D\uDC4B", type =  MessageType.CHAT, timestamp =  "06:02", ),
-            Message(sender = "other", content = "Halo! Good Morning, whats up man?", type = MessageType.CHAT, timestamp = "06:12",),
-            Message(sender = "me", content = "Sorry to bother. Can i ask you for a help today?", type =  MessageType.CHAT, timestamp =  "06:30", ),
-            Message(sender = "other", content = "Of course, what can i help you with??", type = MessageType.CHAT, timestamp =  "06:45",)
-        )
-    }
+    val messages by viewModel.messages.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
