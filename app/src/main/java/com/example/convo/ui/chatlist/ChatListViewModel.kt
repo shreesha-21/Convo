@@ -1,10 +1,14 @@
 package com.example.convo.ui.chatlist
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.convo.domain.model.ChatSummary
-import com.example.convo.ui.chatlist.c.StoryItem
+import com.example.convo.ui.chatlist.components.ChatSelectionEvent
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.launch
 
 class ChatListViewModel : ViewModel() {
 
@@ -16,11 +20,22 @@ class ChatListViewModel : ViewModel() {
     private val _stories = MutableStateFlow<List<String>>(emptyList())
     val stories = _stories.asStateFlow()
 
+    private val _chatSelectionEvent = Channel<ChatSelectionEvent>()
+    val chatSelectionEvent = _chatSelectionEvent.receiveAsFlow()
+
     // TODO: Load real chats and stories in the future
     init {
         loadMockChats()
         loadMockStories()
     }
+
+    // function called when user clicks on a chat
+    fun onChatClick(chatName: String) {
+        viewModelScope.launch {
+            _chatSelectionEvent.send(ChatSelectionEvent.NavigateToChatDetail(chatName))
+        }
+    }
+
 
     // Function to load mock chats
     private fun loadMockChats() {

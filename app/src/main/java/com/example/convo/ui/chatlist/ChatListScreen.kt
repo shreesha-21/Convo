@@ -1,5 +1,6 @@
 package com.example.convo.ui.chatlist
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,9 +18,11 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -35,6 +38,7 @@ import com.example.convo.ui.chatlist.c.AddStoryItem
 import com.example.convo.ui.chatlist.c.ChatListItem
 import com.example.convo.ui.chatlist.c.SearchBarPlaceholder
 import com.example.convo.ui.chatlist.c.StoryItem
+import com.example.convo.ui.chatlist.components.ChatSelectionEvent
 import com.example.convo.ui.theme.AppTheme
 
 @Composable
@@ -47,16 +51,26 @@ fun ChatListScreen(
     val chats by viewModel.chats.collectAsStateWithLifecycle()
     val stories by viewModel.stories.collectAsStateWithLifecycle()
 
+    // Listens to the navigation intent sent from the view model and calls the navigation function
+    LaunchedEffect(Unit) {
+        viewModel.chatSelectionEvent.collect {
+            when(it) {
+                // calls the nav host function to navigate to the page
+                is ChatSelectionEvent.NavigateToChatDetail -> onChatClick(it.username)
+                // Logs error when failed to navigate
+                is ChatSelectionEvent.FailedToNavigateToChatDetail -> Log.d("CHAT-LIST", it.errorMessage)
+            }
+        }
+    }
+
     Column(
         modifier = modifier
             .fillMaxSize()
             .background(MaterialTheme.colorScheme.primary) // Background for the top half
     ) {
-        // --- Top Header Section (Purple Area) ---
         Column(
             modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
         ) {
-            // Header Row
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -90,7 +104,7 @@ fun ChatListScreen(
             Spacer(modifier = Modifier.height(24.dp))
         }
 
-        // --- Main Content Section (White Sheet) ---
+        // --- Main Content Section  ---
         Surface(
             modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp), // The Curved Top
@@ -108,7 +122,10 @@ fun ChatListScreen(
                     verticalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
                     items(chats) { chat ->
-                        ChatListItem(chat)
+                        ChatListItem(
+                            chatSummary = chat,
+                            onClick = {viewModel.onChatClick(chat.sender)}
+                        )
                     }
                 }
             }

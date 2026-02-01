@@ -12,8 +12,8 @@ import kotlinx.coroutines.launch
 class LoginViewModel : ViewModel() {
     private val _username = MutableStateFlow("")
     val username = _username.asStateFlow()
-    private val _uiEvent = Channel<UiEvent>()
-    val uiEvent  = _uiEvent.receiveAsFlow()
+    private val _loginEvent = Channel<LoginEvent>()
+    val uiEvent  = _loginEvent.receiveAsFlow()
 
     fun onUsernameChange(newName: String) {
         _username.value = newName
@@ -23,13 +23,13 @@ class LoginViewModel : ViewModel() {
     fun login() {
         viewModelScope.launch {
             delay(1000)
-            _uiEvent.send(UiEvent.NavigateToChatList(username.value))
+            _loginEvent.send(LoginEvent.NavigateToChatList(username.value))
         }
     }
 
-    sealed class UiEvent {
-        data class NavigateToChatList(val username: String): UiEvent()
-        data class ShowSnackbar(val message: String) : UiEvent()
+    sealed class LoginEvent {
+        data class NavigateToChatList(val username: String): LoginEvent()
+        data class ShowSnackbar(val message: String) : LoginEvent()
     }
 
 }

@@ -36,11 +36,11 @@ fun LoginScreen(
     LaunchedEffect(Unit) {
         viewModel.uiEvent.collect { event ->
             when(event) {
-                is LoginViewModel.UiEvent.NavigateToChatList -> {
+                is LoginViewModel.LoginEvent.NavigateToChatList -> {
                     // Trigger the actual navigation callback
                     onLoginClick(event.username)
                 }
-                is LoginViewModel.UiEvent.ShowSnackbar -> {
+                is LoginViewModel.LoginEvent.ShowSnackbar -> {
                     Log.d("LOGIN_SCREEN", "Failed to navigate to the chatList screen")
                     showSnackbar = true;
                 }
