@@ -16,7 +16,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -26,6 +25,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.convo.ui.chatdetails.components.ChatInputBar
 import com.example.convo.ui.chatdetails.components.ChatTopBar
+import com.example.convo.ui.chatdetails.components.DayBubble
 import com.example.convo.ui.chatdetails.components.MessageBubble
 import com.example.convo.ui.theme.AppTheme
 
@@ -35,7 +35,10 @@ fun ChatDetailScreen(
     modifier: Modifier = Modifier,
     viewModel: ChatDetailViewModel = viewModel()
 ) {
+    //  this contains list of all the messages sent and received
     val messages by viewModel.messages.collectAsStateWithLifecycle()
+    // this is the text currently in the chat input bar
+    val currentText by viewModel.messageText.collectAsStateWithLifecycle()
 
     Column(
         modifier = modifier
@@ -43,14 +46,14 @@ fun ChatDetailScreen(
             .background(MaterialTheme.colorScheme.primary) // Background for Top Bar area
     ) {
 
-        // 1. Custom Top Bar (Purple)
+        //  Custom Top Bar (Purple)
         ChatTopBar(
-            username = "Shashi Kumar",
+            username = "username",
             status = "Online",
             onBackClick = onBackClick
         )
 
-        // 2. Chat Area (White Sheet)
+        // Chat Area (White Sheet)
         Surface(
             modifier = Modifier.fillMaxSize(),
             shape = RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp),
@@ -68,21 +71,9 @@ fun ChatDetailScreen(
                         .padding(horizontal = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // Date Header
+                    // TODO: Implement date header
                     item {
-                        Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
-                            Surface(
-                                color = MaterialTheme.colorScheme.tertiary,
-                                shape = RoundedCornerShape(12.dp)
-                            ) {
-                                Text(
-                                    text = "Today",
-                                    modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
-                                    fontSize = 12.sp,
-                                    color = MaterialTheme.colorScheme.onTertiary
-                                )
-                            }
-                        }
+                        DayBubble()
                     }
 
                     items(messages) { msg ->
@@ -91,7 +82,11 @@ fun ChatDetailScreen(
                 }
 
                 // Input Bar
-                ChatInputBar()
+                ChatInputBar(
+                    currentText = currentText,
+                    onMessageChange = {viewModel.onMessageChange(it)},
+                    onSend = {viewModel.sendMessage()}
+                )
             }
         }
     }

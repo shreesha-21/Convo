@@ -13,4 +13,7 @@
     <string name="login_button_text">Log In</string>
     <string name="snackbar_text">Failed to login</string>
 
+    <!-- Chat details Screen -->
+    <string name="input_placeholder">Type something...</string>
+
 </resources>

@@ -23,12 +23,18 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.convo.R
 import com.example.convo.ui.theme.AppTheme
 
 @Composable
-fun ChatInputBar() {
+fun ChatInputBar(
+    currentText: String,
+    onMessageChange: (String) -> Unit,
+    onSend: () -> Unit
+) {
     Surface(
         shadowElevation = 8.dp, // Adds shadow to the top of the input bar
         color = Color.Transparent
@@ -41,9 +47,14 @@ fun ChatInputBar() {
         ) {
             // Text Input Field
             TextField(
-                value = "",
-                onValueChange = {},
-                placeholder = { Text("Type something...", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+                value = currentText,
+                onValueChange = onMessageChange,
+                placeholder = {
+                    Text(
+                        text = stringResource(R.string.input_placeholder),
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                },
                 modifier = Modifier
                     .weight(1f)
                     .background(Color.Transparent), // Removes default gray bg
@@ -67,7 +78,7 @@ fun ChatInputBar() {
                 color = MaterialTheme.colorScheme.secondaryContainer,
                 modifier = Modifier.size(48.dp)
             ) {
-                IconButton(onClick = {}) {
+                IconButton(onClick = onSend) {
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.Send,
                         contentDescription = "Send",
@@ -83,6 +94,10 @@ fun ChatInputBar() {
 @Composable
 fun PreviewChatInputBar() {
     AppTheme() {
-        ChatInputBar()
+        ChatInputBar(
+            currentText = "",
+            onMessageChange = {},
+            onSend = {}
+        )
     }
 }

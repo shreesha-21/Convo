@@ -17,29 +17,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.convo.domain.model.Message
 import com.example.convo.domain.model.MessageType
+import com.example.convo.ui.chatdetails.ChatDetialsMessageModel
 import com.example.convo.ui.theme.AppTheme
 
 // --- Component: Message Bubble ---
 @Composable
-fun MessageBubble(message: Message) {
-    val isMe = message.sender == "me"
+fun MessageBubble(message: ChatDetialsMessageModel) {
 
     // Dynamic Shape: Pointed corner on the sender's side
-    val bubbleShape = if (isMe) {
+    val bubbleShape = if (message.isMe) {
         RoundedCornerShape(topStart = 20.dp, topEnd = 0.dp, bottomStart = 20.dp, bottomEnd = 20.dp)
     } else {
         RoundedCornerShape(topStart = 0.dp, topEnd = 20.dp, bottomStart = 20.dp, bottomEnd = 20.dp)
     }
 
-    val bgColor = if (isMe) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer
-    val textColor = if (isMe) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSecondaryContainer
+    val bgColor = if (message.isMe) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.secondaryContainer
+    val textColor = if (message.isMe) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSecondaryContainer
     val timeColor =  MaterialTheme.colorScheme.onTertiaryContainer
 
     Box(
         modifier = Modifier.fillMaxWidth(),
-        contentAlignment = if (isMe) Alignment.CenterEnd else Alignment.CenterStart
+        contentAlignment = if (message.isMe) Alignment.CenterEnd else Alignment.CenterStart
     ) {
         Surface(
             color = bgColor,
@@ -53,12 +52,14 @@ fun MessageBubble(message: Message) {
                     fontSize = 16.sp
                 )
                 Spacer(modifier = Modifier.height(4.dp))
-                Text(
-                    text = message.timestamp.toString(),
-                    color = timeColor,
-                    fontSize = 10.sp,
-                    modifier = Modifier.align(Alignment.End)
-                )
+                message.timeStamp?.let {
+                    Text(
+                        text = it,
+                        color = timeColor,
+                        fontSize = 10.sp,
+                        modifier = Modifier.align(Alignment.End)
+                    )
+                }
             }
         }
     }
@@ -69,10 +70,11 @@ fun MessageBubble(message: Message) {
 fun PreviewMessageBubble() {
     AppTheme() {
         MessageBubble(
-            message = Message(
+            message = ChatDetialsMessageModel(
                 sender = "sender",
                 content = "this is a sample message",
-                type = MessageType.CHAT
+                type = MessageType.CHAT,
+                isMe = true
             )
         )
     }
