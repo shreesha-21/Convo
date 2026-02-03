@@ -1,41 +1,42 @@
 package com.example.convo.ui.chatdetails
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import com.example.convo.domain.model.Message
 import com.example.convo.domain.model.MessageType
+import com.example.convo.domain.repository.ChatRepository
+import com.example.convo.domain.repository.UserRepository
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.stateIn
 
 class ChatDetailViewModel(
+    private val userRepository: UserRepository,
+    private val chatRepository: ChatRepository,
     private val currentRecipient: String, // We inject the logged-in user's name
 ) : ViewModel() {
 
-    private val _messages = MutableStateFlow<List<ChatDetialsMessageModel>>(emptyList())
-    val messages = _messages.asStateFlow()
+    private val _messages = chatRepository.observeMessagesFor(currentRecipient)
+        .stateIn(
+            viewModelScope,
+            SharingStarted.WhileSubscribed(5000),
+            emptyList()
+        )
+    val messages = _messages
 
     private val _messageText = MutableStateFlow("")
     val messageText = _messageText.asStateFlow()
 
-    // TODO: Call the real function here instead of the mock function
-    init {
-        loadMockMessages()
-    }
+    private val currenUser: String? = userRepository.currentUser.value
 
-    // Function to load mock messages
-    private fun loadMockMessages(rawMessages: List<Message> = unformattedMockMessagesList) {
-        val formattedList = rawMessages.map {
-            ChatDetialsMessageModel(
-                sender = it.sender,
-                content = it.content,
-                type = it.type,
-                timeStamp = it.timestamp,
-                isMe = it.sender != currentRecipient
-            )
-        }
-        _messages.value = formattedList
-    }
+    // TODO: Implement init function after websockets are introduced
+//    init {
+//        chatRepository.loadMessagesFor(currentRecipient)
+//    }
+
 
     // function which tracks what users types in real time
     fun onMessageChange(text: String) {
@@ -45,31 +46,20 @@ class ChatDetailViewModel(
     // Function called on pressing the send button
     fun sendMessage() {
         val currentText = _messageText.value
-        if (currentText.isBlank()) return
+        if (currentText.isBlank() || currenUser.isNullOrEmpty()) return
 
         val currentTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm"))
 
         // Create object matching your Server structure
         val newMessage = Message(
-            sender = "",
+            sender = currenUser,
             content = currentText,
             timestamp = currentTime,
             type = MessageType.CHAT
         )
 
-        // Update UI immediately (Optimistic update)
-        _messages.value = _messages.value + newMessage.toChatDetailsMessage()
-        _messageText.value = ""
-
+        chatRepository.sendMessage(newMessage)
         // TODO: Send 'newMessage' JSON via WebSocket here
     }
 }
-
-//  Raw messages which is used to test the ui
-val unformattedMockMessagesList = listOf(
-Message(sender = "user", content = "Hi Shashi, good morning!! \uD83D\uDC4B", type =  MessageType.CHAT, timestamp =  "06:02", ),
-Message(sender = "Shashi", content = "Halo! Good Morning, whats up man?", type = MessageType.CHAT, timestamp = "06:12",),
-Message(sender = "user", content = "Sorry to bother. Can i ask you for a help today?", type =  MessageType.CHAT, timestamp =  "06:30", ),
-Message(sender = "Shashi", content = "Of course, what can i help you with??", type = MessageType.CHAT, timestamp =  "06:45",)
-)
 

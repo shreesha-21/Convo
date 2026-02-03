@@ -6,11 +6,14 @@ import kotlinx.coroutines.flow.StateFlow
 
 // Interface for repository related to chats feature
 interface ChatRepository {
-    val chats: StateFlow<List<ChatSummary>>
-    // Loads the list of chats
-    fun loadChats()
+    // Tracks the list of chats
+    fun observeChats(): StateFlow<List<ChatSummary>>
 
-    val activeConversation: StateFlow<List<Message>>
     // Loads the messages with a particular chat Id
-    fun loadMessagesFor(chatId: String)
+    fun observeMessagesFor(chatId: String): StateFlow<List<Message>>
+
+    // Loads stories
+    fun observeStories(): StateFlow<List<String?>>
+
+    fun sendMessage(message: Message)
 }

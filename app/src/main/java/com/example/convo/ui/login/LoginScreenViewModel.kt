@@ -2,6 +2,7 @@ package com.example.convo.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.convo.domain.repository.UserRepository
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -9,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel(private val userRepository: UserRepository) : ViewModel() {
     private val _username = MutableStateFlow("")
     val username = _username.asStateFlow()
     private val _loginEvent = Channel<LoginEvent>()
@@ -23,8 +24,14 @@ class LoginViewModel : ViewModel() {
     fun login() {
         viewModelScope.launch {
             delay(1000)
+            userRepository.login(username.value)
             _loginEvent.send(LoginEvent.NavigateToChatList(username.value))
         }
+    }
+
+    // TODO: Create implementation for this
+    fun logout() {
+        userRepository.logout()
     }
 
     sealed class LoginEvent {

@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.asStateFlow
 class MockUserRepository : UserRepository {
 
     private val _currentUser = MutableStateFlow<String?>(null)
-    val currentUser = _currentUser.asStateFlow()
+    override val currentUser = _currentUser.asStateFlow()
 
     override fun login(username: String) {
 

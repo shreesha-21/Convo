@@ -23,7 +23,7 @@ import com.example.convo.ui.theme.AppTheme
 
 // --- Component: Story Item ---
 @Composable
-fun StoryItem(name: String) {
+fun StoryItem(name: String?) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Surface(
             modifier = Modifier
