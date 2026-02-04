@@ -1,6 +1,7 @@
 package com.example.convo.core.di
 
 import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
+import androidx.lifecycle.createSavedStateHandle
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.example.convo.ChatApplication
@@ -28,9 +29,9 @@ object AppViewModelProvider {
         initializer {
             val app = (this[APPLICATION_KEY] as ChatApplication)
             ChatDetailViewModel(
-                userRepository = app.container.UserRepository,
+                savedStateHandle = createSavedStateHandle(),
+                userSession = app.container.userSession,
                 chatRepository = app.container.ChatRepository,
-                currentRecipient = "Placeholder" // this will be updated during navigation
             )
         }
     }
