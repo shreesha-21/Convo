@@ -50,10 +50,10 @@ fun AppNavigation(modifier: Modifier = Modifier) {
         // Chat List Screen
         composable(
             route = Routes.CHATLIST,
-            arguments = listOf(navArgument("currentUser") { type = NavType.StringType })
+            arguments = listOf(navArgument("username") { type = NavType.StringType })
         ) { backStackEntry ->
             // currently there is no use for username as a general chat list is being shown
-            val currentUser = backStackEntry.arguments?.getString("currentUser") ?: "User"
+            val currentUser = backStackEntry.arguments?.getString("username") ?: "User"
 
             ChatListScreen(
                 onChatClick = { name ->
