@@ -7,11 +7,11 @@ object Routes {
     const val LOGIN = "login"
 
     const val CHATLIST = "chat_list/{username}"
-    const val CHATDETAIL = "chat_detail/{chatName}"
+    const val CHATDETAIL = "chat_detail/{recipientName}"
 
     fun chatList(username: String): String =
         "chat_list/$username"
 
-    fun chatDetail(chatName: String): String =
-        "chat_detail/$chatName"
+    fun chatDetail(recipientName: String): String =
+        "chat_detail/$recipientName"
 }
