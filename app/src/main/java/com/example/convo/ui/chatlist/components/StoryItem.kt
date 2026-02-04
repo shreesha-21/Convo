@@ -24,6 +24,7 @@ import com.example.convo.ui.theme.AppTheme
 // --- Component: Story Item ---
 @Composable
 fun StoryItem(name: String?) {
+    if (name == null) return
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Surface(
             modifier = Modifier
