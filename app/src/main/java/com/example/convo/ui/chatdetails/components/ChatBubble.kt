@@ -18,12 +18,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.convo.domain.model.MessageType
-import com.example.convo.ui.chatdetails.ChatDetialsMessageModel
+import com.example.convo.ui.chatdetails.MessageBubbleUiState
 import com.example.convo.ui.theme.AppTheme
 
 // --- Component: Message Bubble ---
 @Composable
-fun MessageBubble(message: ChatDetialsMessageModel) {
+fun MessageBubble(message: MessageBubbleUiState) {
 
     // Dynamic Shape: Pointed corner on the sender's side
     val bubbleShape = if (message.isMe) {
@@ -70,8 +70,7 @@ fun MessageBubble(message: ChatDetialsMessageModel) {
 fun PreviewMessageBubble() {
     AppTheme() {
         MessageBubble(
-            message = ChatDetialsMessageModel(
-                sender = "sender",
+            message = MessageBubbleUiState(
                 content = "this is a sample message",
                 type = MessageType.CHAT,
                 isMe = true
